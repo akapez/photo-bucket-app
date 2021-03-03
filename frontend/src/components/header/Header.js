@@ -1,10 +1,14 @@
 import React from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import logo from '../assets/logo.png'
-import { useStyles } from '../styles/classes'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  createMuiTheme,
+  ThemeProvider
+} from '@material-ui/core'
+import logo from '../../assets/logo.png'
+import { useStyles } from './classes'
+
 
 const theme = createMuiTheme({
   palette: {

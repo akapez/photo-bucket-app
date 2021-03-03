@@ -1,13 +1,14 @@
 import React from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
+import Posts from './screens/Posts'
 
 function App() {
   return (
     <>
       <Header />
       <main>
-        <h1>Hello</h1>
+        <Posts />
       </main>
       <Footer />
     </>
