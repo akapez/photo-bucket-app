@@ -7,6 +7,7 @@ import {
   ThemeProvider,
   Button
 } from '@material-ui/core'
+import {Link} from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import { useStyles } from './classes'
 
@@ -34,7 +35,9 @@ const Header = () => {
               <Typography variant='h6' className={classes.title}>
                 Photo Bucket
               </Typography>
+              <Link to="/login">
               <Button color="inherit">Login</Button>
+              </Link>
             </Toolbar>
           </AppBar>
         </div>

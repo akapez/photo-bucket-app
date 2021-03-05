@@ -1,5 +1,6 @@
 import express from 'express'
 import connectDB from './config/db.js'
+import {notFound, errorHandler} from './middleware/errorMiddleware.js'
 import dotenv from 'dotenv'
 import postRoutes from './routes/postRoutes.js'
 
@@ -14,7 +15,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/posts', postRoutes)
-
+app.use(notFound)
+app.use(errorHandler)
 
 
 

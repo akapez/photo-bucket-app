@@ -31,12 +31,13 @@ const Post = ({ card }) => {
 
         <CardActionArea>
           <CardMedia className={classes.media} image={card.selectedFile} />
+        </CardActionArea>
           <CardContent>
             <Typography variant='body2' color='textSecondary' component='p'>
               {card.description}
             </Typography>
           </CardContent>
-        </CardActionArea>
+        
         <div style={{ margin: '10px' }}>
           <Chip size='small' label={card.category} />
         </div>
