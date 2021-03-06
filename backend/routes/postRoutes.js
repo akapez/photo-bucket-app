@@ -8,7 +8,7 @@ const router = express.Router()
 // @access  private
 router.get('/', asyncHandler(async (req, res) => {
     const post = await Post.find({})
-
+    
     res.json(post)
   }))
 
