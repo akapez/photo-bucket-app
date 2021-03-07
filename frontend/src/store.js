@@ -4,7 +4,8 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import {postListReducer} from './reducers/postReducers'
 
 const reducer = combineReducers({
-    postList: postListReducer
+    postList: postListReducer,
+    
 })
 
 const initialState = {}

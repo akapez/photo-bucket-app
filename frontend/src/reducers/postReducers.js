@@ -1,7 +1,7 @@
 import {
   POST_LIST_REQUEST,
   POST_LIST_SUCCESS,
-  POST_LIST_FAIL,
+  POST_LIST_FAIL,  
 } from '../constants/postConstants'
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -16,3 +16,5 @@ export const postListReducer = (state = { posts: [] }, action) => {
       return state
   }
 }
+
+
