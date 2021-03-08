@@ -1,4 +1,5 @@
 import React from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {
   AppBar,
   Toolbar,
@@ -10,6 +11,7 @@ import {
 import {Link} from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import { useStyles } from './classes'
+import {logout} from '../../actions/userActions'
 
 
 const theme = createMuiTheme({
@@ -20,11 +22,21 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: ['Poppins', 'sans-serif'].join(','),
-  },
+  },  
 })
 
 const Header = () => {
   const classes = useStyles()
+
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector(state => state.userLogin)
+  const {userInfo} = userLogin
+
+  const logoutHandler = () => {
+    dispatch(logout())
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -35,9 +47,12 @@ const Header = () => {
               <Typography variant='h6' className={classes.title}>
                 Photo Bucket
               </Typography>
-              <Link to="/login">
-              <Button color="inherit">Login</Button>
-              </Link>
+              {userInfo ? (
+                <Button variant='outlined' className={classes.button} onClick={logoutHandler}>Logout</Button>
+              ) : <Link to="/login" style={{textDecoration: 'none'}}>
+              <Button variant='outlined' className={classes.button}>Login</Button>
+              </Link>}
+              
             </Toolbar>
           </AppBar>
         </div>

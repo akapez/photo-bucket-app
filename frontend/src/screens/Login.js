@@ -1,177 +1,129 @@
-import React from "react"
+import React, { useEffect } from 'react'
 import {
   Grid,
   makeStyles,
   Card,
   CardContent,
-  MenuItem,
-  InputLabel,
-  Select,
   CardActions,
   Button,
   CardHeader,
-  FormControl,
-} from "@material-ui/core"
+  Typography,
+} from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Message from '../components/message/Message'
+import Loader from '../components/loader/Loader'
+import { login } from '../actions/userActions'
 
-import { Formik, Form, Field } from "formik"
-import * as Yup from "yup"
-import { TextField } from "formik-material-ui"
+import { Formik, Form, Field } from 'formik'
+import * as Yup from 'yup'
+import { TextField } from 'formik-material-ui'
 
 const useStyle = makeStyles((theme) => ({
-  padding: {
+  root: {
     padding: theme.spacing(3),
+    marginTop: '5rem',
   },
   button: {
     margin: theme.spacing(1),
+  },
+  typography: {
+    fontSize: '15px',
+    textAlign: 'center',
+    padding: '10px',
+    backgroundColor: '#025955',
+    color: '#fff',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#1e212d',
+    fontWeight: 'bold',
   },
 }))
 
 //Data
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  occupation: "",
-  city: "",
-  country: "",
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 }
 
-const options = [
-  { label: "Computer Programmer", value: "Computer_programmer" },
-  { label: "Web Developer", value: "web_developer" },
-  { label: "User Experience Designer", value: "user_experience_designer" },
-  { label: "Systems Analyst", value: "systems_analyst" },
-  { label: "Quality Assurance Tester", value: "quality_assurance_tester" },
-]
-
 //password validation
-const lowercaseRegEx = /(?=.*[a-z])/
-const uppercaseRegEx = /(?=.*[A-Z])/
-const numericRegEx = /(?=.*[0-9])/
-const lengthRegEx = /(?=.{6,})/
+// const lowercaseRegEx = /(?=.*[a-z])/
+// const uppercaseRegEx = /(?=.*[A-Z])/
+// const numericRegEx = /(?=.*[0-9])/
+// const lengthRegEx = /(?=.{6,})/
 
 //validation schema
 let validationSchema = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string()
-    .matches(
-      lowercaseRegEx,
-      "Must contain one lowercase alphabetical character!"
-    )
-    .matches(
-      uppercaseRegEx,
-      "Must contain one uppercase alphabetical character!"
-    )
-    .matches(numericRegEx, "Must contain one numeric character!")
-    .matches(lengthRegEx, "Must contain 6 characters!")
-    .required("Required!"),
+  email: Yup.string().email('Invalid email').required('Required'),
+  // password: Yup.string()
+  //   .matches(
+  //     lowercaseRegEx,
+  //     'Must contain one lowercase alphabetical character!'
+  //   )
+  //   .matches(
+  //     uppercaseRegEx,
+  //     'Must contain one uppercase alphabetical character!'
+  //   )
+  //   .matches(numericRegEx, 'Must contain one numeric character!')
+  //   .matches(lengthRegEx, 'Must contain 6 characters!')
+  //   .required('Required!'),
 })
 
-const UserForm = () => {
+const Login = ({ location, history }) => {
   const classes = useStyle()
 
-  const onSubmit = (values) => {
-    console.log(values)
+  const dispatch = useDispatch()
+  const userLogin = useSelector((state) => state.userLogin)
+  const redirect = location.search ? location.search.split('=')[1] : '/'
+
+  const { loading, error, userInfo } = userLogin
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect)
+    }
+  }, [history, userInfo, redirect])
+
+  const submitHandler = ({ email, password }) => {
+    dispatch(login(email, password))
   }
 
   return (
-    <Grid container justify="center" spacing={1}>
-      <Grid item md={6}>
-        <Card className={classes.padding}>
-          <CardHeader title="REGISTER FORM"></CardHeader>
+    <Grid container justify='center' className={classes.root}>
+      <Grid item md={4}>
+        <Card>
+          <CardHeader title='SIGN IN'></CardHeader>
+          {error && <Message severity='error'>{error}</Message>}
+          {loading && <Loader />}
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={onSubmit}>
-            {({ dirty, isValid, values, handleChange, handleBlur }) => {
+            onSubmit={submitHandler}
+          >
+            {({ dirty, isValid, values }) => {
               return (
                 <Form>
                   <CardContent>
-                    <Grid item container spacing={1} justify="center">
-                      <Grid item xs={12} sm={6} md={6}>
-                        <Field
-                          label="First Name"
-                          variant="outlined"
-                          fullWidth
-                          name="firstName"
-                          value={values.firstName}
-                          component={TextField}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={6}>
-                        <Field
-                          label="Last Name"
-                          variant="outlined"
-                          fullWidth
-                          name="lastName"
-                          value={values.lastName}
-                          component={TextField}
-                        />
-                      </Grid>
-
+                    <Grid item container spacing={1} justify='center'>
                       <Grid item xs={12} sm={6} md={12}>
-                        <FormControl fullWidth variant="outlined">
-                          <InputLabel id="demo-simple-select-outlined-label">
-                            Occupation
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            label="Occupation"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.occupation}
-                            name="occupation">
-                            <MenuItem>None</MenuItem>
-                            {options.map((item) => (
-                              <MenuItem key={item.value} value={item.value}>
-                                {item.label}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={6}>
                         <Field
-                          label="City"
-                          variant="outlined"
+                          label='Email Address'
+                          variant='outlined'
                           fullWidth
-                          name="city"
-                          value={values.city}
-                          component={TextField}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={6}>
-                        <Field
-                          label="Country"
-                          variant="outlined"
-                          fullWidth
-                          name="country"
-                          value={values.country}
-                          component={TextField}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={6}>
-                        <Field
-                          label="Email"
-                          variant="outlined"
-                          fullWidth
-                          name="email"
+                          name='email'
                           value={values.email}
                           component={TextField}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6} md={6}>
+                      <Grid item xs={12} sm={6} md={12}>
                         <Field
-                          label="Password"
-                          variant="outlined"
+                          label='Password'
+                          variant='outlined'
                           fullWidth
-                          name="password"
+                          name='password'
                           value={values.password}
-                          type="password"
+                          type='password'
                           component={TextField}
                         />
                       </Grid>
@@ -180,21 +132,31 @@ const UserForm = () => {
                   <CardActions>
                     <Button
                       disabled={!dirty || !isValid}
-                      variant="contained"
-                      color="primary"
-                      type="Submit"
-                      className={classes.button}>
-                      REGISTER
+                      variant='contained'
+                      color='primary'
+                      type='Submit'
+                      className={classes.button}
+                    >
+                      SIGN IN
                     </Button>
                   </CardActions>
                 </Form>
               )
             }}
           </Formik>
+          <Typography className={classes.typography}>
+            New User?{' '}
+            <Link
+              to={redirect ? `/register?redirect=${redirect}` : '/register'}
+              className={classes.link}
+            >
+              Register
+            </Link>
+          </Typography>
         </Card>
       </Grid>
     </Grid>
   )
 }
 
-export default UserForm
+export default Login

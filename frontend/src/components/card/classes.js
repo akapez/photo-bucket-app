@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 300,
     maxWidth: 345,
-    margin: "1rem",       
+    margin: '1rem',       
     
   },
   media: {
