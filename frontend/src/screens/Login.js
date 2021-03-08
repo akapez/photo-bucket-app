@@ -47,27 +47,9 @@ const initialValues = {
   password: '',
 }
 
-//password validation
-// const lowercaseRegEx = /(?=.*[a-z])/
-// const uppercaseRegEx = /(?=.*[A-Z])/
-// const numericRegEx = /(?=.*[0-9])/
-// const lengthRegEx = /(?=.{6,})/
-
 //validation schema
 let validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
-  // password: Yup.string()
-  //   .matches(
-  //     lowercaseRegEx,
-  //     'Must contain one lowercase alphabetical character!'
-  //   )
-  //   .matches(
-  //     uppercaseRegEx,
-  //     'Must contain one uppercase alphabetical character!'
-  //   )
-  //   .matches(numericRegEx, 'Must contain one numeric character!')
-  //   .matches(lengthRegEx, 'Must contain 6 characters!')
-  //   .required('Required!'),
 })
 
 const Login = ({ location, history }) => {
@@ -75,9 +57,9 @@ const Login = ({ location, history }) => {
 
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
-  const redirect = location.search ? location.search.split('=')[1] : '/'
-
   const { loading, error, userInfo } = userLogin
+
+  const redirect = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
     if (userInfo) {
@@ -106,8 +88,9 @@ const Login = ({ location, history }) => {
                 <Form>
                   <CardContent>
                     <Grid item container spacing={1} justify='center'>
-                      <Grid item xs={12} sm={6} md={12}>
+                      <Grid item xs={12} sm={12} md={12}>
                         <Field
+                          title='Please fill out this field'
                           label='Email Address'
                           variant='outlined'
                           fullWidth
@@ -116,8 +99,9 @@ const Login = ({ location, history }) => {
                           component={TextField}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6} md={12}>
+                      <Grid item xs={12} sm={12} md={12}>
                         <Field
+                          title='Please fill out this field'
                           label='Password'
                           variant='outlined'
                           fullWidth

@@ -51,7 +51,7 @@ const Post = ({ card }) => {
             </div>
           }
           title={card.title}
-          subheader='September 14, 2016'
+          subheader={card.updatedAt.substring(0,10)}
         />
 
         <CardActionArea>
