@@ -10,12 +10,15 @@ import { listPosts } from '../actions/postActions'
 
 
 
-const Posts = () => {  
+const Posts = ({history, match}) => {  
 
   const dispatch = useDispatch() 
 
   const postList = useSelector((state) => state.postList)
   const { loading, error, posts } = postList
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const {userInfo} = userLogin
 
   useEffect(() => {
     dispatch(listPosts())

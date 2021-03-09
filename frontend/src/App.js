@@ -5,6 +5,7 @@ import Footer from './components/footer/Footer'
 import Posts from './screens/Posts'
 import Login from './screens/Login'
 import Register from './screens/Register'
+import Home from './screens/Home'
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
       <main>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/" component={Posts} exact/>
+        <Route path="/posts" component={Posts}/>
+        <Route path="/" component={Home} exact/>
+
       </main>
       <Footer />
     </Router>

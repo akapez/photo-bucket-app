@@ -26,4 +26,65 @@ const getPostById = asyncHandler(async(req, res) => {
     }   
 })
 
-export {getPost, getPostById}
+
+//@desc     Delete a post
+//@route    DELETE/api/post/:id
+//@access   Private
+const deletePostById = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id)
+
+  if (post) {
+    await post.remove()
+    res.json({ message: 'Post removed' })
+  } else {
+    res.status(404)
+    throw new Error('Post not found')
+  }
+})
+
+//@desc     Create a post
+//@route    POST/api/posts
+//@access   Private
+const createPost = asyncHandler(async (req, res) => {
+  const post = new Post({
+    title: '',
+    description: '',    
+    user: req.user._id,
+    selectedFile: '',    
+    category: '',  
+    
+  })
+
+  const createdPost = await post.save()
+  res.status(201).json(createdPost)
+})
+
+// @desc    Update a post
+// @route   PUT /api/post/:id
+// @access  Private
+const updatePost = asyncHandler(async (req, res) => {
+  const {
+    title,
+    description, 
+    selectedFile,    
+    category,  
+  } = req.body
+
+  const post = await Post.findById(req.params.id)
+
+  if (post) {
+    post.title = title
+    post.description = description
+    post.selectedFile = selectedFile
+    post.category = category    
+
+    const updatedPost= await post.save()
+    res.json(updatedPost)
+  } else {
+    res.status(404)
+    throw new Error("Post not found")
+  }
+})
+
+
+export {getPost, getPostById, deletePostById, createPost, updatePost}

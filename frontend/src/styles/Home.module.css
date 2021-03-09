@@ -1,0 +1,66 @@
+.Wrapper {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  margin-top: 8rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.Left {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.Img {
+  width: 450px;
+}
+
+.Right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.Wrapper h1 {
+  font-size: 2rem;
+  color: #1c1b20;
+}
+
+.Wrapper .Caption {
+  font-size: 2rem;
+  color: #ef4f4f;
+}
+
+.Wrapper p {
+  color: #706f6f;
+  font-weight: 900;
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+/* responsive area */
+
+@media only screen and (max-width: 1000px) {
+  .Wrapper {
+    flex-direction: column;
+  }
+
+  .Wrapper h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  .Wrapper .Caption {
+    font-size: 1.8rem;
+  }
+
+  .Wrapper p {
+    font-size: 16px;
+  }
+}

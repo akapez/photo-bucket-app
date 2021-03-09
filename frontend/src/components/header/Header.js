@@ -48,7 +48,9 @@ const Header = () => {
                 Photo Bucket
               </Typography>
               {userInfo ? (
+                <Link to="/login" style={{textDecoration: 'none'}}>
                 <Button variant='outlined' className={classes.button} onClick={logoutHandler}>Logout</Button>
+                </Link>
               ) : <Link to="/login" style={{textDecoration: 'none'}}>
               <Button variant='outlined' className={classes.button}>Login</Button>
               </Link>}

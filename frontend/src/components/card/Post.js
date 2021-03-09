@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import Message from '../message/Message'
+import Loader from '../loader/Loader'
 import {
   Card,
   Chip,
@@ -12,14 +15,27 @@ import {
   IconButton,  
 } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-
-
+import {deletePost} from '../../actions/postActions'
 import { useStyles } from './classes'
 
-const Post = ({ card }) => {
+
+
+const Post = ({ card , _id}) => {
   const classes = useStyles()
 
+  const dispatch = useDispatch()
+
   const [anchorEl, setAnchorEl] = useState(null)
+
+  const postList = useSelector((state) => state.postList)
+  const { loading, error} = postList
+
+  // const postDelete = useSelector((state) => state.postDelete)
+  // const {
+  //   loading: loadingDelete,
+  //   error: errorDelete,
+  //   success: successDelete,
+  // } = postDelete
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -29,9 +45,15 @@ const Post = ({ card }) => {
     setAnchorEl(null)
   }
 
+  const deleteHandler = (id) => {
+    dispatch(deletePost(id))
+  }
+
   return (
     <div>
-      <Card className={classes.root}>
+      {/* {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>} */}
+      {loading ? <Loader /> : error ? <Message severity='error'/> : <Card className={classes.root}>
         <CardHeader
           action={
             <div>
@@ -45,8 +67,10 @@ const Post = ({ card }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                
                 <MenuItem onClick={handleClose}>Edit</MenuItem>
-                <MenuItem onClick={handleClose} style={{color: "#aa2b1d"}}>Delete</MenuItem>
+                
+                <MenuItem onClick={() => deleteHandler(card._id)} style={{color: "#aa2b1d"}}>Delete</MenuItem>
               </Menu>
             </div>
           }
@@ -66,7 +90,8 @@ const Post = ({ card }) => {
         <div style={{ margin: '10px' }}>
           <Chip size='small' label={card.category} />
         </div>
-      </Card>
+      </Card>}     
+      
     </div>
   )
 }

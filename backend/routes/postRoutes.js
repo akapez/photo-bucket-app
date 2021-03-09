@@ -1,11 +1,11 @@
 import express from 'express'
-import { getPost, getPostById } from '../controllers/postController.js'
+import { getPost, getPostById, deletePostById, createPost, updatePost } from '../controllers/postController.js'
 const router = express.Router()
 
 
 
 router.route('/').get(getPost)
-router.route('/:id').get(getPostById)
+router.route('/:id').get(getPostById).delete(deletePostById)
 
 
 

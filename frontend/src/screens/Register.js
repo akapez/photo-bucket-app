@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
   Grid,
   makeStyles,
@@ -90,14 +90,11 @@ let validationSchema = Yup.object().shape({
 const Register = ({ location, history }) => {
   const classes = useStyle()
 
-  //   const [confirmPassword, setConfirmPassword] = useState('')
-  //   const [message, setMessage] = useState(null)
-
   const dispatch = useDispatch()
   const userRegister = useSelector((state) => state.userRegister)
 
   const { loading, error, userInfo } = userRegister
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirect = location.search ? location.search.split('=')[1] : '/posts'
 
   useEffect(() => {
     if (userInfo) {
@@ -114,7 +111,6 @@ const Register = ({ location, history }) => {
       <Grid item md={4}>
         <Card>
           <CardHeader title='SIGN UP'></CardHeader>
-          {/* {message && <Message severity='error'>{message}</Message>} */}
           {error && <Message severity='error'>{error}</Message>}
           {loading && <Loader />}
 

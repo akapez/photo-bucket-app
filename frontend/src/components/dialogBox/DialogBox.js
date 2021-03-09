@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import {
-  Button,  
+  Button,
   createMuiTheme,
   Dialog,
   DialogActions,
@@ -15,25 +14,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import { Field, Form, Formik } from 'formik'
 import { TextField } from 'formik-material-ui'
 import * as Yup from 'yup'
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: theme.spacing(10),
-    padding: '20px',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'right',
-  },
-  button: {
-    fontWeight: 'bold',
-  },
-  input: {
-    display: 'none',
-  },
-}))
+import { useStyles } from './classes'
 
 const formLabelsTheme = createMuiTheme({
   overrides: {
@@ -46,10 +27,7 @@ const formLabelsTheme = createMuiTheme({
       },
     },
   },
-
 })
-
-
 
 //Data
 const initialValues = {
@@ -85,7 +63,7 @@ const DialogBox = () => {
       <div className={classes.root}>
         <Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper} variant="outlined">
+            <Paper className={classes.paper} variant='outlined'>
               <Button
                 variant='contained'
                 color='secondary'
