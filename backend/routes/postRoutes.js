@@ -1,11 +1,12 @@
 import express from 'express'
-import { getPost, getPostById, deletePostById, createPost, updatePost } from '../controllers/postController.js'
 const router = express.Router()
+import { getPost, getPostById, deletePostById, createPost, updatePost } from '../controllers/postController.js'
+import {protect} from '../middleware/authMiddleware.js'
 
 
 
 router.route('/').get(getPost)
-router.route('/:id').get(getPostById).delete(deletePostById)
+router.route('/:id').get(protect, getPostById).delete(protect, deletePostById)
 
 
 

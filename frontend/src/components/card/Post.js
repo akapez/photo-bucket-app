@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import Message from '../message/Message'
-import Loader from '../loader/Loader'
+import React, { useState } from 'react'
+import { useDispatch} from 'react-redux'
 import {
   Card,
   Chip,
@@ -12,30 +10,18 @@ import {
   CardHeader,
   Menu,
   MenuItem,
-  IconButton,  
+  IconButton,
 } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import {deletePost} from '../../actions/postActions'
+import { deletePost } from '../../actions/postActions'
 import { useStyles } from './classes'
 
-
-
-const Post = ({ card , _id}) => {
+const Post = ({ card, history }) => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
 
   const [anchorEl, setAnchorEl] = useState(null)
-
-  const postList = useSelector((state) => state.postList)
-  const { loading, error} = postList
-
-  // const postDelete = useSelector((state) => state.postDelete)
-  // const {
-  //   loading: loadingDelete,
-  //   error: errorDelete,
-  //   success: successDelete,
-  // } = postDelete
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -46,14 +32,18 @@ const Post = ({ card , _id}) => {
   }
 
   const deleteHandler = (id) => {
-    dispatch(deletePost(id))
+    if (window.confirm('Are you sure')) {
+      dispatch(deletePost(id))
+    }
+  }
+
+  const createPostHandler = (post) => {
+    //Post create
   }
 
   return (
     <div>
-      {/* {loadingDelete && <Loader />}
-      {errorDelete && <Message variant="danger">{errorDelete}</Message>} */}
-      {loading ? <Loader /> : error ? <Message severity='error'/> : <Card className={classes.root}>
+      <Card className={classes.root}>
         <CardHeader
           action={
             <div>
@@ -67,15 +57,21 @@ const Post = ({ card , _id}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                
-                <MenuItem onClick={handleClose}>Edit</MenuItem>
-                
-                <MenuItem onClick={() => deleteHandler(card._id)} style={{color: "#aa2b1d"}}>Delete</MenuItem>
+                <MenuItem onClick={() => createPostHandler(card._id)}>
+                  Edit
+                </MenuItem>
+
+                <MenuItem
+                  onClick={() => deleteHandler(card._id)}
+                  style={{ color: '#aa2b1d' }}
+                >
+                  Delete
+                </MenuItem>
               </Menu>
             </div>
           }
           title={card.title}
-          subheader={card.updatedAt.substring(0,10)}
+          subheader={card.updatedAt.substring(0, 10)}
         />
 
         <CardActionArea>
@@ -90,8 +86,7 @@ const Post = ({ card , _id}) => {
         <div style={{ margin: '10px' }}>
           <Chip size='small' label={card.category} />
         </div>
-      </Card>}     
-      
+      </Card>
     </div>
   )
 }
