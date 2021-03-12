@@ -7,8 +7,9 @@ import Loader from '../components/loader/Loader'
 import Box from '@material-ui/core/Box'
 import DialogBox from '../components/dialogBox/DialogBox'
 import { listPosts } from '../actions/postActions'
+import { POST_CREATE_RESET } from '../constants/postConstants'
 
-const Posts = ({ history}) => {
+const Posts = ({ history }) => {
   const dispatch = useDispatch()
 
   const postList = useSelector((state) => state.postList)
@@ -18,7 +19,19 @@ const Posts = ({ history}) => {
   const { userInfo } = userLogin
 
   const postDelete = useSelector((state) => state.postDelete)
-  const { loading: loadingDelete, error: errorDelete, success: successDelete, } = postDelete
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = postDelete
+
+  const postCreate = useSelector((state) => state.postCreate)
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    post: createdPost,
+  } = postCreate
 
   useEffect(() => {
     if (userInfo) {
@@ -26,7 +39,7 @@ const Posts = ({ history}) => {
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo, successDelete])
+  }, [dispatch, history, userInfo, successDelete, successCreate, createdPost])
 
   return (
     <>
@@ -35,6 +48,8 @@ const Posts = ({ history}) => {
       </Grid>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

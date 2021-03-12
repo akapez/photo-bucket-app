@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   Button,
   createMuiTheme,
@@ -14,6 +15,8 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import { Field, Form, Formik } from 'formik'
 import { TextField } from 'formik-material-ui'
 import * as Yup from 'yup'
+import { createPost } from '../../actions/postActions'
+
 import { useStyles } from './classes'
 
 const formLabelsTheme = createMuiTheme({
@@ -44,10 +47,14 @@ let validationSchema = Yup.object().shape({
 
 const DialogBox = () => {
   const classes = useStyles()
+
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
+  const createPostHandler = () => {
     setOpen(true)
+    dispatch(createPost())
   }
 
   const handleClose = () => {
@@ -69,7 +76,7 @@ const DialogBox = () => {
                 color='secondary'
                 className={classes.button}
                 startIcon={<AddCircleOutlineIcon />}
-                onClick={handleClickOpen}
+                onClick={createPostHandler}
               >
                 Add a Photo
               </Button>

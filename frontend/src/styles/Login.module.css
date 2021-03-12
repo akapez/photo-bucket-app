@@ -16,32 +16,26 @@
 }
 
 .Img {
-  width: 450px;
+  width: 400px;
 }
 
 .Right {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1.5;
   align-items: center;
   justify-content: center;
 }
 
-.Wrapper h1 {
-  font-size: 2rem;
-  color: #1c1b20;
-}
-
-.Wrapper .Caption {
-  font-size: 2rem;
+.Right .Caption {
   color: #ef4f4f;
 }
 
-.Wrapper p {
+.Right p {
   color: #706f6f;
   font-weight: 900;
   display: block;
-  margin: auto;
+  margin-top: 15px;
   text-align: center;
 }
 
@@ -50,17 +44,22 @@
 @media only screen and (max-width: 1000px) {
   .Wrapper {
     flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
   }
+  .Right {
+    display: none;
+  }
+}
 
-  .Wrapper h1 {
-    font-size: 1.8rem;
-    text-align: center;
+@media only screen and (max-width: 1920px) {
+  .Right {
+    flex: 1;
   }
-  .Wrapper .Caption {
-    font-size: 1.8rem;
-  }
+}
 
-  .Wrapper p {
-    font-size: 16px;
+@media only screen and (max-width: 1024px) {
+  .Right {
+    display: none;
   }
 }

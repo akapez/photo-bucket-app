@@ -2,11 +2,11 @@ import asyncHandler from 'express-async-handler'
 import Post from '../models/postModel.js'
 
 
-// @desc    Fetch all posts
+// @desc    Fetch all user specific posts
 // @route   GET/api/posts
 // @access  Private
 const getPost = asyncHandler(async(req, res) => {
-    const post = await Post.find({})
+    const post = await Post.find({user: req.user._id})
     
     res.json(post)
 })
@@ -42,16 +42,16 @@ const deletePostById = asyncHandler(async (req, res) => {
   }
 })
 
-//@desc     Create a post
+//@desc     Create a new post
 //@route    POST/api/posts
 //@access   Private
 const createPost = asyncHandler(async (req, res) => {
   const post = new Post({
-    title: '',
-    description: '',    
+    title,
+    description,    
     user: req.user._id,
-    selectedFile: '',    
-    category: '',  
+    selectedFile,    
+    category,  
     
   })
 
@@ -60,7 +60,7 @@ const createPost = asyncHandler(async (req, res) => {
 })
 
 // @desc    Update a post
-// @route   PUT /api/post/:id
+// @route   PUT /api/posts/:id
 // @access  Private
 const updatePost = asyncHandler(async (req, res) => {
   const {

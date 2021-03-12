@@ -13,12 +13,15 @@ import {
   IconButton,
 } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { deletePost } from '../../actions/postActions'
-import { useStyles } from './classes'
+import { deletePost} from '../../actions/postActions'
+import { useStyles} from './classes'
 
-const Post = ({ card, history }) => {
+ 
+const Post = ({ card, history , match }) => {
   const classes = useStyles()
 
+ 
+  
   const dispatch = useDispatch()
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -37,7 +40,7 @@ const Post = ({ card, history }) => {
     }
   }
 
-  const createPostHandler = (post) => {
+  const createPostHandler = () => {   
     //Post create
   }
 
@@ -57,10 +60,10 @@ const Post = ({ card, history }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={() => createPostHandler(card._id)}>
+                <MenuItem                
+                onClick={() => createPostHandler()}>
                   Edit
-                </MenuItem>
-
+                </MenuItem>                
                 <MenuItem
                   onClick={() => deleteHandler(card._id)}
                   style={{ color: '#aa2b1d' }}
