@@ -11,7 +11,12 @@ import {
   POST_CREATE_REQUEST,
   POST_CREATE_SUCCESS,
   POST_CREATE_FAIL,
-  POST_CREATE_RESET,  
+  POST_CREATE_RESET,
+  POST_UPDATE_REQUEST,
+  POST_UPDATE_SUCCESS,
+  POST_UPDATE_FAIL,
+  POST_UPDATE_RESET,
+  POST_DETAILS_RESET,  
 } from '../constants/postConstants'
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -31,11 +36,13 @@ export const postListReducer = (state = { posts: [] }, action) => {
 export const postDetailsReducer = (state = {post: {} }, action) => {
   switch (action.type) {
     case POST_DETAILS_REQUEST:
-      return {loading: true, ...state }
+      return {loading: true, ...state}
     case POST_DETAILS_SUCCESS:
       return { loading: false, post: action.payload }
     case POST_DETAILS_FAIL:
-      return { loading: false, error: action.payload }   
+      return { loading: false, error: action.payload }
+    case POST_DETAILS_RESET:
+      return {post: {}}
     default:
       return state
   }
@@ -69,3 +76,19 @@ export const postCreateReducer = (state = {}, action) => {
       return state
   }
 }
+
+export const postUpdateReducer = (state = {post: {}}, action) => {
+  switch (action.type) {
+    case POST_UPDATE_REQUEST:
+      return {loading: true }
+    case POST_UPDATE_SUCCESS:
+      return { loading: false, success: true, post: action.payload}
+    case POST_UPDATE_FAIL:
+      return { loading: false, error: action.payload }
+    case POST_UPDATE_RESET:
+      return {post: {}}   
+    default:
+      return state
+  }
+}
+

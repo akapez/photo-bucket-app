@@ -10,6 +10,10 @@ export const useStyles = makeStyles((theme) => ({
   media: {
     height: 140,
   },
+  link: {
+    textDecoration:'none',
+    color: '#184d47',
+  }
   
 }))
 

@@ -6,7 +6,7 @@ import {protect} from '../middleware/authMiddleware.js'
 
 
 router.route('/').get(protect,getPost).post(protect, createPost)
-router.route('/:id').get(protect, getPostById).delete(protect, deletePostById).put(protect, updatePost)
+router.route('/:id').get(protect, getPostById).delete(protect, deletePostById).put( protect, updatePost)
 
 
 

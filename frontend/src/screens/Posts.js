@@ -1,15 +1,29 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from '../components/card/Post'
 import Message from '../components/message/Message'
 import Loader from '../components/loader/Loader'
 import Box from '@material-ui/core/Box'
-import DialogBox from '../components/dialogBox/DialogBox'
-import { listPosts } from '../actions/postActions'
+import { listPosts, createPost} from '../actions/postActions'
 import { POST_CREATE_RESET } from '../constants/postConstants'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: theme.spacing(10),
+    padding: '20px',
+  },
+
+  button: {
+    fontWeight: 'bold',
+  },
+}))
+
 const Posts = ({ history }) => {
+  const classes = useStyles()
   const dispatch = useDispatch()
 
   const postList = useSelector((state) => state.postList)
@@ -34,22 +48,40 @@ const Posts = ({ history }) => {
   } = postCreate
 
   useEffect(() => {
+    dispatch({ type: POST_CREATE_RESET })
     if (userInfo) {
       dispatch(listPosts())
     } else {
       history.push('/login')
     }
+
+    if (successCreate) {
+      history.push(`/post/${createdPost._id}/edit`)
+    } 
+
   }, [dispatch, history, userInfo, successDelete, successCreate, createdPost])
+
+  const createPostHandler = () => {
+    dispatch(createPost())
+  }
 
   return (
     <>
-      <Grid container justify='flex-end'>
-        <DialogBox />
+      <Grid container justify='flex-end' className={classes.root}>
+        <Button
+          variant='contained'
+          color='secondary'
+          className={classes.button}
+          startIcon={<AddCircleOutlineIcon />}
+          onClick={createPostHandler}
+        >
+          Add a Photo
+        </Button>
       </Grid>
       {loadingDelete && <Loader />}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {errorDelete && <Message severity='error'>{errorDelete}</Message>}
       {loadingCreate && <Loader />}
-      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
+      {errorCreate && <Message severity='error'>{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

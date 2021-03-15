@@ -10,7 +10,7 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true,        
     },
-    selectedFile: {
+    image: {
         type: String,
         required: true,        
     },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useDispatch} from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import {
   Card,
   Chip,
@@ -13,15 +14,12 @@ import {
   IconButton,
 } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { deletePost} from '../../actions/postActions'
-import { useStyles} from './classes'
+import { deletePost } from '../../actions/postActions'
+import { useStyles } from './classes'
 
- 
-const Post = ({ card, history , match }) => {
+const Post = ({card}) => {
   const classes = useStyles()
 
- 
-  
   const dispatch = useDispatch()
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -40,10 +38,6 @@ const Post = ({ card, history , match }) => {
     }
   }
 
-  const createPostHandler = () => {   
-    //Post create
-  }
-
   return (
     <div>
       <Card className={classes.root}>
@@ -60,10 +54,9 @@ const Post = ({ card, history , match }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem                
-                onClick={() => createPostHandler()}>
-                  Edit
-                </MenuItem>                
+                <Link to={`/post/${card._id}/edit`} className={classes.link}>
+                  <MenuItem>Edit</MenuItem>
+                </Link>
                 <MenuItem
                   onClick={() => deleteHandler(card._id)}
                   style={{ color: '#aa2b1d' }}
@@ -78,7 +71,7 @@ const Post = ({ card, history , match }) => {
         />
 
         <CardActionArea>
-          <CardMedia className={classes.media} image={card.selectedFile} />
+          <CardMedia className={classes.media} image={card.image} />
         </CardActionArea>
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
